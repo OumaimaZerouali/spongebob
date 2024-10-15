@@ -1,0 +1,12 @@
+<h2>SpongeBob Characters</h2>
+
+<div class="character-cards">
+    @for(character of characters; track character){
+      <div class="character-card">
+        <img [src]="character.imageUrl" alt="{{ character.firstName }} {{ character.lastName }}" />
+        <h3>{{ character.firstName }} {{ character.lastName }}</h3>
+        <p>Occupation: {{ character.occupation }}</p>
+        <p>Motto: {{ character.motto }}</p>
+      </div>
+    }
+</div>
