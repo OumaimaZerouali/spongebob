@@ -1,12 +1,24 @@
-<h2>SpongeBob Characters</h2>
+<section class="characters">
+  <div class="characters__info">
+    <h2>SpongeBob Characters</h2>
+    <p>
+      The underwater world of Bikini Bottom is filled with quirky and memorable characters.
+      SpongeBob SquarePants, an optimistic and enthusiastic sea sponge, lives in a pineapple under the sea and works at the Krusty Krab.
+      His best friend, Patrick Star, is a lazy but lovable starfish who often joins SpongeBob on his adventures.
+      Squidward Tentacles, their neighbor, is a cynical octopus who longs for a more refined life, often expressing his frustration with SpongeBob and Patrick’s antics.
+      Other notable characters include Mr. Krabs, the money-obsessed crab who owns the Krusty Krab, and Sandy Cheeks, a clever squirrel from Texas who loves karate and science.
+      Together, these characters create a fun and chaotic atmosphere, making Bikini Bottom a place full of laughter and lessons.
+    </p>
+  </div>
 
-<div class="character-cards">
+  <div class="characters__cards">
     @for(character of characters; track character){
-      <div class="character-card">
+      <div class="characters__cards--card">
         <img [src]="character.imageUrl" alt="{{ character.firstName }} {{ character.lastName }}" />
         <h3>{{ character.firstName }} {{ character.lastName }}</h3>
         <p>Occupation: {{ character.occupation }}</p>
         <p>Motto: {{ character.motto }}</p>
       </div>
     }
-</div>
+  </div>
+</section>
