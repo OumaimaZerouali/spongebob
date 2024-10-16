@@ -1,4 +1,4 @@
-package usecase;
+package usecase.character;
 
 import domain.character.Character;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.character.CharacterRepository;
 import repository.character.CharacterJPAEntity;
-import usecase.character.GetAllCharactersUseCase;
 
 import java.util.Arrays;
 import java.util.List;

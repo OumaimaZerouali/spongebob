@@ -13,6 +13,10 @@ public class GetCharacterByNameUseCase {
     public Character execute(String firstName, String lastName) {
         var characterEntity = characterRepository.findByName(firstName, lastName);
 
+        if (characterEntity == null) {
+            return null;
+        }
+
         return new Character(
                 characterEntity.getFirstname(),
                 characterEntity.getLastname(),

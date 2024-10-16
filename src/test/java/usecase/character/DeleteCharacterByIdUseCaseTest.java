@@ -1,4 +1,4 @@
-package usecase;
+package usecase.character;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.character.CharacterRepository;
-import usecase.character.DeleteCharacterByIdUseCase;
 
 import static org.mockito.Mockito.*;
 

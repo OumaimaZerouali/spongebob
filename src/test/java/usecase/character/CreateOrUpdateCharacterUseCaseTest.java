@@ -1,4 +1,4 @@
-package usecase;
+package usecase.character;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 import repository.character.CharacterJPAEntity;
 import repository.character.CharacterRepository;
 import domain.character.Character;
-import usecase.character.CreateOrUpdateCharacterUseCase;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

@@ -1,5 +1,6 @@
-package usecase;
+package usecase.character;
 
+import domain.character.Character;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -7,20 +8,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.character.CharacterJPAEntity;
 import repository.character.CharacterRepository;
-import domain.character.Character;
-import usecase.character.GetCharacterByIdUseCase;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-public class GetCharacterByIdUseCaseTest {
-
+class GetCharacterByNameUseCaseTest {
     @Mock
     private CharacterRepository characterRepository;
 
     @InjectMocks
-    private GetCharacterByIdUseCase getCharacterByIdUseCase;
+    private GetCharacterByNameUseCase getCharacterByNameUseCase;
 
     @BeforeEach
     public void setUp() {
@@ -28,18 +25,21 @@ public class GetCharacterByIdUseCaseTest {
     }
 
     @Test
-    public void givenCharacterId_whenGetCharacterById_thenReturnCharacter() {
-        String characterId = "b3158f8e-5e10-4e94-aaf2-3049e7a5e6a3";
+    public void givenCharacterWithName_whenGetCharacterByName_thenReturnCharacter() {
+        var firstName = "Spongebob";
+        var lastName = "SquarePants";
+
         CharacterJPAEntity characterEntity = new CharacterJPAEntity();
+        characterEntity.setId("id");
         characterEntity.setFirstname("SpongeBob");
         characterEntity.setLastname("SquarePants");
         characterEntity.setOccupation("Fry Cook");
         characterEntity.setMotto("I’m ready!");
         characterEntity.setImageurl("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
 
-        when(characterRepository.getCharacterById(characterId)).thenReturn(characterEntity);
+        when(characterRepository.findByName(firstName, lastName)).thenReturn(characterEntity);
 
-        Character result = getCharacterByIdUseCase.execute(characterId);
+        Character result = getCharacterByNameUseCase.execute(firstName, lastName);
 
         assertThat(result).isNotNull();
         assertThat(result.getFirstName()).isEqualTo("SpongeBob");
@@ -50,10 +50,13 @@ public class GetCharacterByIdUseCaseTest {
     }
 
     @Test
-    public void givenInvalidCharacterId_whenGetCharacterById_thenReturnNull() {
-        when(characterRepository.getCharacterById(anyString())).thenReturn(null);
+    public void givenInvalidCharacterWithName_whenGetCharacterByName_thenReturnNull() {
+        var firstName = "Fake";
+        var lastName = "FAKER";
 
-        Character result = getCharacterByIdUseCase.execute("invalid-id");
+        when(characterRepository.findByName(firstName, lastName)).thenReturn(null);
+
+        Character result = getCharacterByNameUseCase.execute(firstName, lastName);
 
         assertThat(result).isNull();
     }
