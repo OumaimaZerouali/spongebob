@@ -22,4 +22,19 @@ export class CharacterService {
   getAllCharacters(): Observable<Character[]> {
     return this.http.get<Character[]>(this.apiUrl);
   }
+
+  getCharacterByName(firstName: string, lastName: string): Observable<Character> {
+    const url = `${this.apiUrl}/name?firstName=${firstName}&lastName=${lastName}`;
+    return this.http.get<Character>(url);
+  }
+
+  updateCharacter(character: Character): Observable<void> {
+    const url = `${this.apiUrl}`;
+    return this.http.post<void>(url, character);
+  }
+
+  deleteCharacter(firstName: string, lastName: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/name?firstName=${firstName}&lastName=${lastName}`);
+  }
+
 }

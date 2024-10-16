@@ -1,7 +1,7 @@
-package repository;
+package repository.character;
 
 import com.speedment.jpastreamer.application.JPAStreamer;
-import domain.Character;
+import domain.character.Character;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -32,13 +32,22 @@ public class CharacterRepository {
                 .orElse(null); // TODO: Change this handling
     }
 
+    public CharacterJPAEntity findByName(String firstName, String lastName) {
+        return entityManager.createQuery(
+                        "SELECT c FROM CharacterJPAEntity c WHERE c.firstname = :firstName AND c.lastname = :lastName", CharacterJPAEntity.class)
+                .setParameter("firstName", firstName)
+                .setParameter("lastName", lastName)
+                .getSingleResult();
+    }
+
+
     public List<CharacterJPAEntity> getCharacters() {
         return jpaStreamer.stream(CharacterJPAEntity.class)
                 .toList();
     }
 
     public void createCharacter(Character character) {
-        CharacterJPAEntity characterJPAEntity = new CharacterJPAEntity(character);
+        var characterJPAEntity = new CharacterJPAEntity(character);
         entityManager.persist(characterJPAEntity);
     }
 
@@ -47,7 +56,14 @@ public class CharacterRepository {
     }
 
     public void deleteCharacter(String id) {
-        CharacterJPAEntity character = entityManager.find(CharacterJPAEntity.class, id);
+        var character = entityManager.find(CharacterJPAEntity.class, id);
+        if (character != null) {
+            entityManager.remove(character);
+        }
+    }
+
+    public void deleteByFirstNameAndLastName(String firstName, String lastName) {
+        var character = findByName(firstName, lastName);
         if (character != null) {
             entityManager.remove(character);
         }

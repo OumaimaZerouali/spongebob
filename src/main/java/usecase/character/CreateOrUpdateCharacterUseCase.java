@@ -1,11 +1,11 @@
-package usecase;
+package usecase.character;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import repository.CharacterJPAEntity;
-import repository.CharacterRepository;
-import domain.Character;
+import repository.character.CharacterJPAEntity;
+import repository.character.CharacterRepository;
+import domain.character.Character;
 
 @Transactional
 @ApplicationScoped

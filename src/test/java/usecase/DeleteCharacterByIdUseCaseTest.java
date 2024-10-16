@@ -5,16 +5,18 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repository.CharacterRepository;
+import repository.character.CharacterRepository;
+import usecase.character.DeleteCharacterByIdUseCase;
+
 import static org.mockito.Mockito.*;
 
-public class DeleteCharacterUseCaseTest {
+public class DeleteCharacterByIdUseCaseTest {
 
     @Mock
     private CharacterRepository characterRepository;
 
     @InjectMocks
-    private DeleteCharacterUseCase deleteCharacterUseCase;
+    private DeleteCharacterByIdUseCase deleteCharacterByIdUseCase;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +27,7 @@ public class DeleteCharacterUseCaseTest {
     public void givenCharacterId_whenExecute_thenDeleteCharacter() {
         String characterId = "character-id";
 
-        deleteCharacterUseCase.execute(characterId);
+        deleteCharacterByIdUseCase.execute(characterId);
 
         verify(characterRepository).deleteCharacter(characterId);
     }
@@ -34,7 +36,7 @@ public class DeleteCharacterUseCaseTest {
     public void givenNonExistentCharacterId_whenExecute_thenDoNotThrowException() {
         String nonExistentId = "non-existent-id";
 
-        deleteCharacterUseCase.execute(nonExistentId);
+        deleteCharacterByIdUseCase.execute(nonExistentId);
 
         verify(characterRepository).deleteCharacter(nonExistentId);
     }

@@ -1,13 +1,13 @@
-package usecase;
+package usecase.character;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import repository.CharacterRepository;
+import repository.character.CharacterRepository;
 
 @Transactional
 @ApplicationScoped
-public class DeleteCharacterUseCase {
+public class DeleteCharacterByIdUseCase {
 
     @Inject
     CharacterRepository characterRepository;

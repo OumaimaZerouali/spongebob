@@ -1,9 +1,9 @@
-package usecase;
+package usecase.character;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import repository.CharacterRepository;
-import domain.Character;
+import repository.character.CharacterRepository;
+import domain.character.Character;
 
 import java.util.List;
 

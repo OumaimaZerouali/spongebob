@@ -1,4 +1,4 @@
-package domain;
+package domain.character;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

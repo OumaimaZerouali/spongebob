@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repository.CharacterJPAEntity;
-import repository.CharacterRepository;
-import domain.Character;
+import repository.character.CharacterJPAEntity;
+import repository.character.CharacterRepository;
+import domain.character.Character;
+import usecase.character.CreateOrUpdateCharacterUseCase;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,0 +1,49 @@
+<section class="character">
+  <div class="character__info">
+    <h2>SpongeBob Characters</h2>
+    <p>
+      The underwater world of Bikini Bottom is filled with quirky and memorable characters.
+    </p>
+  </div>
+
+  <div>
+    @if(character){
+      <div class="character__detail">
+        <div class="character__detail--info">
+          <img [src]="character.imageUrl" alt="{{ character.firstName }} {{ character.lastName }}" />
+          <h2>{{ character.firstName }} {{ character.lastName }}</h2>
+          <p>Occupation: {{ character.occupation }}</p>
+          <p>Motto: {{ character.motto }}</p>
+        </div>
+
+        <form [formGroup]="characterForm" (ngSubmit)="updateCharacter()" class="character__detail--form">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" type="text" formControlName="firstName" />
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" formControlName="lastName" />
+          </div>
+
+          <div class="form-group">
+            <label for="occupation">Occupation</label>
+            <input id="occupation" type="text" formControlName="occupation" />
+          </div>
+
+          <div class="form-group">
+            <label for="motto">Motto</label>
+            <input id="motto" type="text" formControlName="motto" />
+          </div>
+
+          <div class="buttons">
+            <button type="submit" (click)="updateCharacter()" class="buttons__update">Update Character</button>
+            <button type="button" (click)="deleteCharacter()" class="buttons__warn">Delete Character</button>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>
+

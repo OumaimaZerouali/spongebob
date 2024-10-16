@@ -1,11 +1,9 @@
-package usecase;
+package usecase.character;
 
-import domain.Character;
+import domain.character.Character;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import repository.CharacterRepository;
-
-import java.util.UUID;
+import repository.character.CharacterRepository;
 
 @ApplicationScoped
 public class GetCharacterByIdUseCase {

@@ -1,26 +1,28 @@
-package controller;
+package controller.character;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import usecase.CreateOrUpdateCharacterUseCase;
-import usecase.DeleteCharacterUseCase;
-import usecase.GetAllCharactersUseCase;
-import domain.Character;
-import usecase.GetCharacterByIdUseCase;
+import domain.character.Character;
+import usecase.character.*;
 
 import java.util.List;
 
 @Path("/characters")
 public class CharacterController {
 
-    @Inject
-    DeleteCharacterUseCase deleteCharacterUseCase;
+
     @Inject
     GetCharacterByIdUseCase getCharacterByIdUseCase;
     @Inject
     GetAllCharactersUseCase getAllCharactersUseCase;
+    @Inject
+    GetCharacterByNameUseCase getCharacterByNameUseCase;
+    @Inject
+    DeleteCharacterByNameUseCase deleteCharacterByNameUseCase;
+    @Inject
+    DeleteCharacterByIdUseCase deleteCharacterByIdUseCase;
     @Inject
     CreateOrUpdateCharacterUseCase createOrUpdateCharacterUseCase;
 
@@ -29,6 +31,15 @@ public class CharacterController {
     @Produces(MediaType.APPLICATION_JSON)
     public Character getCharacterById(@PathParam("id") String id) {
         return getCharacterByIdUseCase.execute(id);
+    }
+
+    @GET
+    @Path("/name")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Character getCharacterByName(
+            @QueryParam("firstName") String firstName,
+            @QueryParam("lastName") String lastName) {
+        return getCharacterByNameUseCase.execute(firstName, lastName);
     }
 
     @GET
@@ -47,6 +58,14 @@ public class CharacterController {
     @DELETE
     @Path("{id}")
     public void deleteCharacter(@PathParam("id") String id) {
-        deleteCharacterUseCase.execute(id);
+        deleteCharacterByIdUseCase.execute(id);
+    }
+
+    @DELETE
+    @Path("/name")
+    public void deleteCharacterByName(
+            @QueryParam("firstName") String firstName,
+            @QueryParam("lastName") String lastName) {
+        deleteCharacterByNameUseCase.execute(firstName, lastName);
     }
 }

@@ -1,13 +1,15 @@
 package repository;
 
 import com.speedment.jpastreamer.application.JPAStreamer;
-import domain.Character;
+import domain.character.Character;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import repository.character.CharacterJPAEntity;
+import repository.character.CharacterRepository;
 
 import java.util.List;
 import java.util.UUID;

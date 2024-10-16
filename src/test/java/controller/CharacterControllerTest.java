@@ -2,16 +2,15 @@ package controller;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import usecase.CreateOrUpdateCharacterUseCase;
-import usecase.DeleteCharacterUseCase;
-import usecase.GetAllCharactersUseCase;
-import usecase.GetCharacterByIdUseCase;
-import domain.Character;
+import usecase.character.CreateOrUpdateCharacterUseCase;
+import usecase.character.DeleteCharacterByIdUseCase;
+import usecase.character.GetAllCharactersUseCase;
+import usecase.character.GetCharacterByIdUseCase;
+import domain.character.Character;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 class CharacterControllerTest {
 
     @InjectMock
-    DeleteCharacterUseCase deleteCharacterUseCase;
+    DeleteCharacterByIdUseCase deleteCharacterByIdUseCase;
 
     @InjectMock
     GetCharacterByIdUseCase getCharacterByIdUseCase;
@@ -106,14 +105,14 @@ class CharacterControllerTest {
         public void givenCharacterId_whenDeleteCharacter_thenShouldReturn204() {
             String characterId = "b3158f8e-5e10-4e94-aaf2-3049e7a5e6a3";
 
-            doNothing().when(deleteCharacterUseCase).execute(characterId);
+            doNothing().when(deleteCharacterByIdUseCase).execute(characterId);
 
             given().when()
                     .delete("/characters/{id}", characterId)
                     .then()
                     .statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
-            Mockito.verify(deleteCharacterUseCase).execute(characterId);
+            Mockito.verify(deleteCharacterByIdUseCase).execute(characterId);
         }
     }
 

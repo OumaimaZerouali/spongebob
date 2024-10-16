@@ -1,13 +1,14 @@
 package usecase;
 
-import domain.Character;
+import domain.character.Character;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repository.CharacterRepository;
-import repository.CharacterJPAEntity;
+import repository.character.CharacterRepository;
+import repository.character.CharacterJPAEntity;
+import usecase.character.GetAllCharactersUseCase;
 
 import java.util.Arrays;
 import java.util.List;
