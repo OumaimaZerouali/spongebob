@@ -1,4 +1,4 @@
-package controller;
+package controller.character;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;

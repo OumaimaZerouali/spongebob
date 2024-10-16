@@ -1,4 +1,4 @@
-package repository;
+package repository.character;
 
 import com.speedment.jpastreamer.application.JPAStreamer;
 import domain.character.Character;
@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repository.character.CharacterJPAEntity;
-import repository.character.CharacterRepository;
 
 import java.util.List;
 import java.util.UUID;
