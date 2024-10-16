@@ -34,11 +34,11 @@ public class CharacterController {
     }
 
     @GET
-    @Path("/name")
+    @Path("/{firstName}/{lastName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Character getCharacterByName(
-            @QueryParam("firstName") String firstName,
-            @QueryParam("lastName") String lastName) {
+            @PathParam("firstName") String firstName,
+            @PathParam("lastName") String lastName) {
         return getCharacterByNameUseCase.execute(firstName, lastName);
     }
 
@@ -62,10 +62,10 @@ public class CharacterController {
     }
 
     @DELETE
-    @Path("/name")
+    @Path("/{firstName}/{lastName}")
     public void deleteCharacterByName(
-            @QueryParam("firstName") String firstName,
-            @QueryParam("lastName") String lastName) {
+            @PathParam("firstName") String firstName,
+            @PathParam("lastName") String lastName) {
         deleteCharacterByNameUseCase.execute(firstName, lastName);
     }
 }

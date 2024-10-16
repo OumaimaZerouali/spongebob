@@ -6,10 +6,7 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import usecase.character.CreateOrUpdateCharacterUseCase;
-import usecase.character.DeleteCharacterByIdUseCase;
-import usecase.character.GetAllCharactersUseCase;
-import usecase.character.GetCharacterByIdUseCase;
+import usecase.character.*;
 import domain.character.Character;
 
 import java.io.IOException;
@@ -36,6 +33,12 @@ class CharacterControllerTest {
 
     @InjectMock
     GetAllCharactersUseCase getAllCharactersUseCase;
+
+    @InjectMock
+    GetCharacterByNameUseCase  getCharacterByNameUseCase;
+
+    @InjectMock
+    DeleteCharacterByNameUseCase deleteCharacterByNameUseCase;
 
     @InjectMock
     CreateOrUpdateCharacterUseCase createOrUpdateCharacterUseCase;
@@ -77,6 +80,24 @@ class CharacterControllerTest {
                     .statusCode(200)
                     .body(is(response));
         }
+
+        @Test
+        public void givenValidCharacterWithName_whenGetCharacterByName_thenReturnCharacter() throws IOException {
+            var firstName = "Spongebob";
+            var lastName = "SquarePants";
+
+            when(getCharacterByNameUseCase.execute(firstName, lastName))
+                    .thenReturn(new Character(firstName, lastName, "Fry Cook", "I’m ready!", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png"));
+
+            var response = readResourceFile("spongebob_2.json");
+
+            given().when()
+                    .contentType("application/json")
+                    .get("/characters/{firstName}/{lastName}", firstName, lastName)
+                    .then()
+                    .statusCode(200)
+                    .body(is(response));
+        }
     }
 
     @Nested
@@ -102,7 +123,7 @@ class CharacterControllerTest {
     @Nested
     class DeleteCharacter {
         @Test
-        public void givenCharacterId_whenDeleteCharacter_thenShouldReturn204() {
+        public void givenCharacterId_whenDeleteCharacter_thenShouldDeleteCharacter() {
             String characterId = "b3158f8e-5e10-4e94-aaf2-3049e7a5e6a3";
 
             doNothing().when(deleteCharacterByIdUseCase).execute(characterId);
@@ -113,6 +134,21 @@ class CharacterControllerTest {
                     .statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
             Mockito.verify(deleteCharacterByIdUseCase).execute(characterId);
+        }
+
+        @Test
+        public void givenValidCharacterWithName_whenDeleteCharacterByName_thenShouldDeleteCharacter() {
+            var firstName = "Spongebob";
+            var lastName = "SquarePants";
+
+            doNothing().when(deleteCharacterByNameUseCase).execute(firstName, lastName);
+
+            given().when()
+                    .delete("/characters/{firstName}/{lastName}", firstName, lastName)
+                    .then()
+                    .statusCode(Response.Status.NO_CONTENT.getStatusCode());
+
+            Mockito.verify(deleteCharacterByNameUseCase).execute(firstName, lastName);
         }
     }
 

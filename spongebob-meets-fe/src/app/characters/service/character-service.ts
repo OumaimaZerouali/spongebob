@@ -24,7 +24,7 @@ export class CharacterService {
   }
 
   getCharacterByName(firstName: string, lastName: string): Observable<Character> {
-    const url = `${this.apiUrl}/name?firstName=${firstName}&lastName=${lastName}`;
+    const url = `${this.apiUrl}/${firstName}/${lastName}`;
     return this.http.get<Character>(url);
   }
 
@@ -34,7 +34,6 @@ export class CharacterService {
   }
 
   deleteCharacter(firstName: string, lastName: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/name?firstName=${firstName}&lastName=${lastName}`);
+    return this.http.delete<void>(`${this.apiUrl}/${firstName}/${lastName}`);
   }
-
 }

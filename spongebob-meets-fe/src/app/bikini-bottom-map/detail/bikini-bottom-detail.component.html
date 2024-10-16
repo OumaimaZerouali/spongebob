@@ -1,14 +1,18 @@
-@if(location){
-  <div>
-    <h2>{{ location.name }}</h2>
-    <img [src]="location.imageUrl" alt="{{ location.name }}" />
-    <p><strong>Owner:</strong> {{ location.owner }}</p>
-    <p><strong>Description:</strong> {{ location.description }}</p>
-    <p><strong>Fun Fact:</strong> {{ location.funFact }}</p>
-    <p><strong>Address:</strong> {{ location.adress }}</p>
-  </div>
-} @else {
-  <ng-template>
-    <p>Loading location details...</p>
-  </ng-template>
-}
+<section class="location-detail">
+  @if(location){
+    <div class="location-detail__info">
+      <img [src]="location.imageUrl" alt="{{ location.name }}" class="location-detail__info--image"/>
+      <div class="location-detail__info--text">
+        <h2>{{ location.name }}</h2>
+        <p><strong>Owner:</strong> {{ location.owner }}</p>
+        <p><strong>Description:</strong> {{ location.description }}</p>
+        <p><strong>Fun Fact:</strong> {{ location.funFact }}</p>
+        <p><strong>Address:</strong> {{ location.adress }}</p>
+      </div>
+    </div>
+  } @else {
+    <ng-template>
+      <p>Loading location details...</p>
+    </ng-template>
+  }
+</section>
