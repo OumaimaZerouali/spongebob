@@ -2,13 +2,16 @@ package usecase.character;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import repository.character.CharacterRepository;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class DeleteCharacterByIdUseCaseTest {
 
     @Mock
@@ -16,11 +19,6 @@ public class DeleteCharacterByIdUseCaseTest {
 
     @InjectMocks
     private DeleteCharacterByIdUseCase deleteCharacterByIdUseCase;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void givenCharacterId_whenExecute_thenDeleteCharacter() {

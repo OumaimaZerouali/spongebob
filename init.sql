@@ -19,6 +19,21 @@ CREATE TABLE locations
     address     TEXT
 );
 
+CREATE TABLE quiz
+(
+    id       TEXT PRIMARY KEY,
+    question TEXT NOT NULL,
+    answer   TEXT
+);
+
+CREATE TABLE quiz_answer_options
+(
+    quiz_id       TEXT NOT NULL,
+    answer_option TEXT NOT NULL,
+    FOREIGN KEY (quiz_id) REFERENCES quiz (id) ON DELETE CASCADE,
+    PRIMARY KEY (quiz_id, answer_option)
+);
+
 
 INSERT INTO characters (id, firstname, lastname, occupation, imageUrl, motto)
 VALUES ('b3158f8e-5e10-4e94-aaf2-3049e7a5e6a3', 'SpongeBob', 'SquarePants', 'Fry Cook',
@@ -113,51 +128,177 @@ VALUES ('b3158f8e-5e10-4e94-aaf2-3049e7a5e6a3', 'SpongeBob', 'SquarePants', 'Fry
 
 INSERT INTO locations (id, name, owner, funFact, description, imageUrl, address)
 VALUES ('b0f71e13-9d2b-453e-a0e1-02c462a61558', 'Spongebob house', 'SpongeBob SquarePants',
-        'SpongeBob lives in a pineapple under the sea.', 'The pineapple-shaped house of SpongeBob SquarePants.', 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eacf3422-c1a2-403d-a730-605b2abea60f/d694muy-60f62399-7876-4dbd-9d44-cd56523bc469.png/v1/fill/w_1024,h_769,q_80,strp/spongebob_s_house_by_cartoonkal_d694muy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY5IiwicGF0aCI6IlwvZlwvZWFjZjM0MjItYzFhMi00MDNkLWE3MzAtNjA1YjJhYmVhNjBmXC9kNjk0bXV5LTYwZjYyMzk5LTc4NzYtNGRiZC05ZDQ0LWNkNTY1MjNiYzQ2OS5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-57f4hzc1cRmmMEZp5PLph-376Xi7PKYFxg-sv0-SD4',
+        'SpongeBob lives in a pineapple under the sea.', 'The pineapple-shaped house of SpongeBob SquarePants.',
+        'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eacf3422-c1a2-403d-a730-605b2abea60f/d694muy-60f62399-7876-4dbd-9d44-cd56523bc469.png/v1/fill/w_1024,h_769,q_80,strp/spongebob_s_house_by_cartoonkal_d694muy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY5IiwicGF0aCI6IlwvZlwvZWFjZjM0MjItYzFhMi00MDNkLWE3MzAtNjA1YjJhYmVhNjBmXC9kNjk0bXV5LTYwZjYyMzk5LTc4NzYtNGRiZC05ZDQ0LWNkNTY1MjNiYzQ2OS5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-57f4hzc1cRmmMEZp5PLph-376Xi7PKYFxg-sv0-SD4',
         '124 Conch Street'),
 
        ('2b1f51f4-58c7-4b73-9800-59de9e0d9d12', 'Squidward house', 'Squidward Tentacles',
         'Squidward house is shaped like an Easter Island head.',
-        'The stone Tiki-head house where Squidward Tentacles lives.', 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/380dbd01-38ee-4146-93df-31ce051f4b83/df7dnvu-4e54dba3-ad6b-463b-8aa5-e3cc362afedd.png/v1/fill/w_1280,h_1456,q_80,strp/_spongebob_squarepants__squidward_s_house_by_spongedrew250_df7dnvu-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzM4MGRiZDAxLTM4ZWUtNDE0Ni05M2RmLTMxY2UwNTFmNGI4M1wvZGY3ZG52dS00ZTU0ZGJhMy1hZDZiLTQ2M2ItOGFhNS1lM2NjMzYyYWZlZGQucG5nIiwiaGVpZ2h0IjoiPD0xNDU2Iiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiXC93bVwvMzgwZGJkMDEtMzhlZS00MTQ2LTkzZGYtMzFjZTA1MWY0YjgzXC9zcG9uZ2VkcmV3MjUwLTQucG5nIiwib3BhY2l0eSI6OTUsInByb3BvcnRpb25zIjowLjQ1LCJncmF2aXR5IjoiY2VudGVyIn19.EBJztJrDM3YK6AjY6ep3Ky75VKwiKwJGNsiKugHLW1Y', '122 Conch Street'),
+        'The stone Tiki-head house where Squidward Tentacles lives.',
+        'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/380dbd01-38ee-4146-93df-31ce051f4b83/df7dnvu-4e54dba3-ad6b-463b-8aa5-e3cc362afedd.png/v1/fill/w_1280,h_1456,q_80,strp/_spongebob_squarepants__squidward_s_house_by_spongedrew250_df7dnvu-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzM4MGRiZDAxLTM4ZWUtNDE0Ni05M2RmLTMxY2UwNTFmNGI4M1wvZGY3ZG52dS00ZTU0ZGJhMy1hZDZiLTQ2M2ItOGFhNS1lM2NjMzYyYWZlZGQucG5nIiwiaGVpZ2h0IjoiPD0xNDU2Iiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiXC93bVwvMzgwZGJkMDEtMzhlZS00MTQ2LTkzZGYtMzFjZTA1MWY0YjgzXC9zcG9uZ2VkcmV3MjUwLTQucG5nIiwib3BhY2l0eSI6OTUsInByb3BvcnRpb25zIjowLjQ1LCJncmF2aXR5IjoiY2VudGVyIn19.EBJztJrDM3YK6AjY6ep3Ky75VKwiKwJGNsiKugHLW1Y',
+        '122 Conch Street'),
 
        ('3d6c22be-f490-4016-b235-7e892d217ab6', 'Patrick house', 'Patrick Star',
-        'Patrick house is a rock that he lives under.', 'The house of Patrick Star, which is just a rock.', 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0fbb05107478815.5fa8477153d1d.jpg',
+        'Patrick house is a rock that he lives under.', 'The house of Patrick Star, which is just a rock.',
+        'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0fbb05107478815.5fa8477153d1d.jpg',
         '120 Conch Street'),
 
        ('4d88d25a-5b41-4a68-a8d7-d6ab3a2355a1', 'Chum bucket', 'Plankton',
-        'Plankton tries to steal the Krabby Patty secret formula.', 'The fast food restaurant owned by Plankton.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXea7d23WI0J-Wu6rHCMwF1g8Wr7JQ3n7lFg&s',
+        'Plankton tries to steal the Krabby Patty secret formula.', 'The fast food restaurant owned by Plankton.',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXea7d23WI0J-Wu6rHCMwF1g8Wr7JQ3n7lFg&s',
         '2230 Bikini Bottom Ave'),
 
        ('5d34f926-fb2c-4453-bd16-bf8787cfc283', 'Krusty krab', 'Mr. Krabs',
         'The Krabby Patty is the most popular food at the Krusty Krab.',
-        'The famous fast food restaurant owned by Mr. Krabs.', 'https://www.wikihow.com/images/a/a7/Draw-the-Krusty-Krab-Step-34.jpg', '831 Bottom Feeder Lane'),
+        'The famous fast food restaurant owned by Mr. Krabs.',
+        'https://www.wikihow.com/images/a/a7/Draw-the-Krusty-Krab-Step-34.jpg', '831 Bottom Feeder Lane'),
 
        ('6e2333b9-c3e7-4a41-85c8-88c44c2ea90b', 'The salty spitoon', 'None',
-        'The Salty Spitoon is a tough club for tough fish.', 'A club for the toughest fish in Bikini Bottom.', 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgV4opNgXkJW3vJ1no6nvp8SCwtJuisrOjeU27QfOlESq9x-VwalxQZ1Is9wmfPClELNca7B5javckAuZodxRq4lzPW65SzPq7Kh_QVPWadFpTHSoYlgL9Z2DG8pcDYBFko1NrpcbdvC1_qTeMQABDEmPZdPL0gE8O-qsM_Ob93tZtSc0Fqyw/s1420/No_Weenies_Allowed_043.webp',
+        'The Salty Spitoon is a tough club for tough fish.', 'A club for the toughest fish in Bikini Bottom.',
+        'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgV4opNgXkJW3vJ1no6nvp8SCwtJuisrOjeU27QfOlESq9x-VwalxQZ1Is9wmfPClELNca7B5javckAuZodxRq4lzPW65SzPq7Kh_QVPWadFpTHSoYlgL9Z2DG8pcDYBFko1NrpcbdvC1_qTeMQABDEmPZdPL0gE8O-qsM_Ob93tZtSc0Fqyw/s1420/No_Weenies_Allowed_043.webp',
         'Rough and Tough Blvd'),
 
        ('7b1734bb-540d-40c8-86da-41a5aeaba104', 'Glove world', 'None', 'Glove World is an amusement park.',
-        'An amusement park full of fun rides and games.', 'https://preview.redd.it/rgckeidzazo51.png?width=1080&crop=smart&auto=webp&s=29d12b3d9226b9ed0f5a9996978c2107c0a16ef3', 'Glove Street'),
+        'An amusement park full of fun rides and games.',
+        'https://preview.redd.it/rgckeidzazo51.png?width=1080&crop=smart&auto=webp&s=29d12b3d9226b9ed0f5a9996978c2107c0a16ef3',
+        'Glove Street'),
 
        ('8e54b47e-1c41-4e6b-872e-9bfb7cddc47b', 'Dutchman cave', 'The Flying Dutchman',
-        'The Dutchman ship haunts the sea.', 'The lair of the ghost pirate, The Flying Dutchman.', 'https://upload.wikimedia.org/wikipedia/id/a/a7/Legends_of_Bikini_Bottom_promo_art.jpg', 'Haunted Hill'),
+        'The Dutchman ship haunts the sea.', 'The lair of the ghost pirate, The Flying Dutchman.',
+        'https://upload.wikimedia.org/wikipedia/id/a/a7/Legends_of_Bikini_Bottom_promo_art.jpg', 'Haunted Hill'),
 
        ('9f27cd74-81cb-49e3-b4e2-6f7a7d5f9e8a', 'Sandies house', 'Sandy Cheeks',
         'Sandy house is a glass dome because she a land mammal.',
-        'A glass dome where Sandy Cheeks lives to breathe air.', 'https://media-s3-us-east-1.ceros.com/editorial-content/images/2021/02/03/33f5d793f462452a6bed22c68c2dcd45/sandys.png', 'Treedome 101'),
+        'A glass dome where Sandy Cheeks lives to breathe air.',
+        'https://media-s3-us-east-1.ceros.com/editorial-content/images/2021/02/03/33f5d793f462452a6bed22c68c2dcd45/sandys.png',
+        'Treedome 101'),
 
        ('a12d5129-01c1-4b5b-a22b-c412aba8b545', 'Shady shoals', 'Mermaid Man',
         'Shady Shoals is a retirement home where Mermaid Man and Barnacle Boy live.',
-        'A retirement home where superheroes Mermaid Man and Barnacle Boy reside.', 'https://cdn.mobygames.com/c809a21a-ac17-11ed-9eb0-02420a000136.webp', 'Elderly Reef St'),
+        'A retirement home where superheroes Mermaid Man and Barnacle Boy reside.',
+        'https://cdn.mobygames.com/c809a21a-ac17-11ed-9eb0-02420a000136.webp', 'Elderly Reef St'),
 
        ('b37c2829-3adf-44d7-bfc6-d09b9311e726', 'Bank', 'None',
-        'The Bank is where Bikini Bottom citizens keep their money.', 'The central bank of Bikini Bottom.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ4i7msgRonhyHav3D4uusO5HT4PlXmM3LuA&s',
+        'The Bank is where Bikini Bottom citizens keep their money.', 'The central bank of Bikini Bottom.',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ4i7msgRonhyHav3D4uusO5HT4PlXmM3LuA&s',
         'Bank Ave 450'),
 
        ('c497927b-5fb7-4829-87da-d0ed098ffbb2', 'Puffs boating school', 'Mrs. Puff',
-        'Mrs. Puff teaches SpongeBob how to drive.', 'Mrs. Puff driving school where SpongeBob is a student.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3OrmkO0ZomtFD-n8uJCPxXfO8uSza4dZDTbN6WFZPEJQj8ZoHm8HfWWFn3wHHNe_n74M&usqp=CAU',
+        'Mrs. Puff teaches SpongeBob how to drive.', 'Mrs. Puff driving school where SpongeBob is a student.',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3OrmkO0ZomtFD-n8uJCPxXfO8uSza4dZDTbN6WFZPEJQj8ZoHm8HfWWFn3wHHNe_n74M&usqp=CAU',
         'School Blvd 32'),
 
        ('d516a538-f0a7-4298-a6fe-fadac826be6a', 'Mussel beach', 'None', 'Mussel Beach is a popular vacation spot.',
-        'A relaxing beach with mussels and sunbathing Bikini Bottomites.', 'https://lh3.googleusercontent.com/proxy/qVu2dOcp8EgcGeMDW9qD2tLqMSBP2d_YbBM3w4X2oV3clqumEBpjv9_5C5l451cGKgQ8miG1lnaRKsQCetin8HY7hh3hIHPrRFVhRhMN', 'Mussel Ave 900');
+        'A relaxing beach with mussels and sunbathing Bikini Bottomites.',
+        'https://lh3.googleusercontent.com/proxy/qVu2dOcp8EgcGeMDW9qD2tLqMSBP2d_YbBM3w4X2oV3clqumEBpjv9_5C5l451cGKgQ8miG1lnaRKsQCetin8HY7hh3hIHPrRFVhRhMN',
+        'Mussel Ave 900');
+
+INSERT INTO quiz (id, question, answer)
+VALUES ('1', 'What is SpongeBob job at the Krusty Krab?', 'Fry Cook'),
+       ('2', 'What is the name of SpongeBob pet snail?', 'Gary'),
+       ('3', 'Who is SpongeBob best friend?', 'Patrick Star'),
+       ('4', 'What is the name of the town where SpongeBob lives?', 'Bikini Bottom'),
+       ('5', 'What is the Krusty Krab secret ingredient?', 'Krabby Patty Secret Formula'),
+       ('6', 'Who is the owner of the Krusty Krab?', 'Mr. Krabs'),
+       ('7', 'What is Squidward profession?', 'Cashier at the Krusty Krab'),
+       ('8', 'What does SpongeBob use to catch jellyfish?', 'A jellyfishing net'),
+       ('9', 'What instrument does Squidward play?', 'Clarinet'),
+       ('10', 'What is the name of SpongeBob boating school teacher?', 'Mrs. Puff'),
+       ('11', 'What type of creature is Plankton?', 'Microbe/Plankton'),
+       ('12', 'What is SpongeBob favorite pastime?', 'Blowing bubbles'),
+       ('13', 'What is the name of Sandy Cheeks pet?',
+        'Sandy Cheeks doesn have a pet, but she has a pet squirrel named "Sandy" in the show.'),
+       ('14', 'What do SpongeBob and Patrick use to create their own superhero identities?',
+        'The "Super" and "Electric" costumes'),
+       ('15', 'What is the name of the infamous sea monster in the series?', 'The Alaskan Bull Worm'),
+       ('16', 'What does Mr. Krabs love more than anything?', 'Money'),
+       ('17', 'What type of animal is Gary?', 'Snail'),
+       ('18', 'Who often tries to steal the Krabby Patty formula?', 'Plankton'),
+       ('19', 'What is the name of SpongeBob favorite restaurant, besides the Krusty Krab?',
+        'The Chum Bucket (but he dislikes it)'),
+       ('20', 'What does SpongeBob often say to cheer people up?', 'Im ready, Im ready, Im ready!');
+
+-- Insert answer options for the SpongeBob quiz
+INSERT INTO quiz_answer_options (quiz_id, answer_option)
+VALUES ('1', 'Fry Cook'),
+       ('1', 'Cashier'),
+       ('1', 'Manager'),
+       ('1', 'Waiter'),
+       ('2', 'Gary'),
+       ('2', 'Meow'),
+       ('2', 'Bubbles'),
+       ('2', 'Patrick'),
+       ('3', 'Patrick Star'),
+       ('3', 'Sandy Cheeks'),
+       ('3', 'Squidward'),
+       ('3', 'Mr. Krabs'),
+       ('4', 'Bikini Bottom'),
+       ('4', 'Atlantis'),
+       ('4', 'Undersea World'),
+       ('4', 'Ocean City'),
+       ('5', 'Krabby Patty Secret Formula'),
+       ('5', 'Chum'),
+       ('5', 'Ketchup'),
+       ('5', 'Pickles'),
+       ('6', 'Mr. Krabs'),
+       ('6', 'Squidward'),
+       ('6', 'SpongeBob'),
+       ('6', 'Plankton'),
+       ('7', 'Cashier at the Krusty Krab'),
+       ('7', 'Chef'),
+       ('7', 'Lifeguard'),
+       ('7', 'Gardener'),
+       ('8', 'A jellyfishing net'),
+       ('8', 'A bucket'),
+       ('8', 'A fishing rod'),
+       ('8', 'A rope'),
+       ('9', 'Clarinet'),
+       ('9', 'Piano'),
+       ('9', 'Drums'),
+       ('9', 'Guitar'),
+       ('10', 'Mrs. Puff'),
+       ('10', 'Mr. Krabs'),
+       ('10', 'Squidward'),
+       ('10', 'Sandy Cheeks'),
+       ('11', 'Microbe/Plankton'),
+       ('11', 'Fish'),
+       ('11', 'Crab'),
+       ('11', 'Shrimp'),
+       ('12', 'Blowing bubbles'),
+       ('12', 'Sailing'),
+       ('12', 'Fishing'),
+       ('12', 'Playing video games'),
+       ('13', 'Sandy Cheeks doesnt have a pet, but she has a pet squirrel named "Sandy" in the show.'),
+       ('13', 'Gary'),
+       ('13', 'A fish'),
+       ('13', 'A clam'),
+       ('14', 'The "Super" and "Electric" costumes'),
+       ('14', 'Capes and masks'),
+       ('14', 'Dresses and shoes'),
+       ('14', 'Hat and glasses'),
+       ('15', 'The Alaskan Bull Worm'),
+       ('15', 'The Sea Cucumber'),
+       ('15', 'The Flying Dutchman'),
+       ('15', 'The Loch Ness Monster'),
+       ('16', 'Money'),
+       ('16', 'Love'),
+       ('16', 'SpongeBob'),
+       ('16', 'Sandy'),
+       ('17', 'Snail'),
+       ('17', 'Fish'),
+       ('17', 'Crab'),
+       ('17', 'Octopus'),
+       ('18', 'Plankton'),
+       ('18', 'Sandy'),
+       ('18', 'Mr. Krabs'),
+       ('18', 'Squidward'),
+       ('19', 'The Chum Bucket (but he dislikes it)'),
+       ('19', 'The Krusty Krab'),
+       ('19', 'The Sea Cucumber'),
+       ('19', 'The Ice Cream Shop'),
+       ('20', 'Im ready, Im ready, Im ready!'),
+       ('20', 'Lets go!'),
+       ('20', 'Time to party!'),
+       ('20', 'Its a good day!');
+
 
