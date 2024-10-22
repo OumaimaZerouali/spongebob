@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(), provideAnimationsAsync('noop')
+    provideHttpClient(), provideAnimationsAsync('noop'), provideAnimationsAsync('noop')
   ]
 };
 

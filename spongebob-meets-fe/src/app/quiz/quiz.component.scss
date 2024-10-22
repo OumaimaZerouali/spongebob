@@ -1,0 +1,19 @@
+.quiz {
+  &__info {
+    margin: 40px;
+  }
+
+  &__correct{
+    color: green;
+    font-weight: bold;
+  }
+
+  &__incorrect {
+    color: red;
+    font-weight: bold;
+  }
+
+  &__score {
+    margin: 40px;
+  }
+}

@@ -1,0 +1,40 @@
+<section class="quiz">
+    <div class="quiz__info">
+      <h2>Quiz</h2>
+    </div>
+
+    <div class="quiz__questions">
+      <ul>
+        @for(quiz of quizzes; track quiz){
+          <strong>{{ quiz.question }}</strong>
+          <ul>
+            @for(option of quiz.answerOptions; track option){
+              <mat-checkbox
+                [disabled]="quiz.hasAnswered"
+                [ngModel]="quiz.selectedAnswer === option"
+                (change)="checkAnswer(quiz, option)"
+                [class.correct]="quiz.selectedAnswer === quiz.correctAnswer && quiz.selectedAnswer === option"
+                [class.incorrect]="quiz.selectedAnswer && quiz.selectedAnswer !== quiz.correctAnswer && quiz.selectedAnswer === option"
+              >
+                {{ option }}
+              </mat-checkbox>
+            }
+          </ul>
+
+          @if(quiz.selectedAnswer === quiz.correctAnswer){
+            <p class="quiz__correct">Correct!</p>
+          }
+
+          @if(quiz.selectedAnswer && quiz.selectedAnswer !== quiz.correctAnswer){
+            <p class="quiz__incorrect">Incorrect, try again!</p>
+          }
+        }
+      </ul>
+    </div>
+
+  @if(allQuestionsAnswered()){
+    <div class="quiz__score">
+      <h3>Your Score: {{ score }}/{{ quizzes.length }}</h3>
+    </div>
+  }
+</section>
