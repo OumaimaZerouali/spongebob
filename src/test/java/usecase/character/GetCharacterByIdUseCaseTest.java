@@ -1,19 +1,18 @@
 package usecase.character;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import repository.character.CharacterJPAEntity;
 import repository.character.CharacterRepository;
-import domain.character.Character;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class GetCharacterByIdUseCaseTest {
@@ -34,24 +33,24 @@ public class GetCharacterByIdUseCaseTest {
         characterEntity.setMotto("I’m ready!");
         characterEntity.setImageurl("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
 
-        when(characterRepository.getCharacterById(characterId)).thenReturn(characterEntity);
+        when(characterRepository.getCharacterById(characterId)).thenReturn(Optional.of(characterEntity));
 
-        Character result = getCharacterByIdUseCase.execute(characterId);
+        var result = getCharacterByIdUseCase.execute(characterId);
 
         assertThat(result).isNotNull();
-        assertThat(result.getFirstName()).isEqualTo("SpongeBob");
-        assertThat(result.getLastName()).isEqualTo("SquarePants");
-        assertThat(result.getOccupation()).isEqualTo("Fry Cook");
-        assertThat(result.getMotto()).isEqualTo("I’m ready!");
-        assertThat(result.getImageUrl()).isEqualTo("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
+        assertThat(result.get().getFirstName()).isEqualTo("SpongeBob");
+        assertThat(result.get().getLastName()).isEqualTo("SquarePants");
+        assertThat(result.get().getOccupation()).isEqualTo("Fry Cook");
+        assertThat(result.get().getMotto()).isEqualTo("I’m ready!");
+        assertThat(result.get().getImageUrl()).isEqualTo("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
     }
 
     @Test
     public void givenInvalidCharacterId_whenGetCharacterById_thenReturnNull() {
-        when(characterRepository.getCharacterById(anyString())).thenReturn(null);
+        when(characterRepository.getCharacterById(anyString())).thenReturn(Optional.empty());
 
-        Character result = getCharacterByIdUseCase.execute("invalid-id");
+        var result = getCharacterByIdUseCase.execute("invalid-id");
 
-        assertThat(result).isNull();
+        assertThat(result).isEmpty();
     }
 }

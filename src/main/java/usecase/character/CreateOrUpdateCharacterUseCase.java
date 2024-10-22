@@ -1,11 +1,10 @@
 package usecase.character;
 
+import domain.character.Character;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import repository.character.CharacterJPAEntity;
 import repository.character.CharacterRepository;
-import domain.character.Character;
 
 @Transactional
 @ApplicationScoped
@@ -15,9 +14,10 @@ public class CreateOrUpdateCharacterUseCase {
     CharacterRepository characterRepository;
 
     public void execute(Character character) {
-        CharacterJPAEntity existingCharacter = characterRepository.getCharacterByName(character.getFirstName(), character.getLastName());
+        var existingCharacterOpt = characterRepository.getCharacterByName(character.getFirstName(), character.getLastName());
 
-        if (existingCharacter != null) {
+        if (existingCharacterOpt.isPresent()) {
+            var existingCharacter = existingCharacterOpt.get();
             existingCharacter.setOccupation(character.getOccupation());
             existingCharacter.setMotto(character.getMotto());
             existingCharacter.setImageurl(character.getImageUrl());
@@ -25,6 +25,6 @@ public class CreateOrUpdateCharacterUseCase {
         } else {
             characterRepository.createCharacter(character);
         }
-    }
+    } // TODO: NOT REALLY FAN OF THIS
 }
 

@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class CharacterRepository {
@@ -16,20 +17,18 @@ public class CharacterRepository {
     @Inject
     EntityManager entityManager;
 
-    public CharacterJPAEntity getCharacterById(String id) {
+    public Optional<CharacterJPAEntity> getCharacterById(String id) {
         return jpaStreamer.stream(CharacterJPAEntity.class)
                 .filter(characterJPAEntity -> characterJPAEntity.getId().equals(id))
-                .findFirst()
-                .orElse(null); // TODO: Change this handeling
+                .findFirst();
     }
 
-    public CharacterJPAEntity getCharacterByName(String firstName, String lastName) {
+    public Optional<CharacterJPAEntity> getCharacterByName(String firstName, String lastName) {
         return jpaStreamer.stream(CharacterJPAEntity.class)
                 .filter(characterJPAEntity ->
                         characterJPAEntity.getFirstname().equals(firstName) &&
                                 characterJPAEntity.getLastname().equals(lastName))
-                .findFirst()
-                .orElse(null); // TODO: Change this handling
+                .findFirst();
     }
 
     public CharacterJPAEntity findByName(String firstName, String lastName) {

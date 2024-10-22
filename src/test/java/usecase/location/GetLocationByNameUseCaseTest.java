@@ -1,14 +1,14 @@
 package usecase.location;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import repository.location.LocationJPAEntity;
 import repository.location.LocationRepository;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -34,26 +34,26 @@ class GetLocationByNameUseCaseTest {
         entity.setFunFact("Fun Fact");
         entity.setImageUrl("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
 
-        when(locationRepository.getLocationByName(name)).thenReturn(entity);
+        when(locationRepository.getLocationByName(name)).thenReturn(Optional.of(entity));
 
         var result = getLocationByNameUseCase.execute(name);
 
         assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo("Spongebob house");
-        assertThat(result.getAdress()).isEqualTo("124 Conch Street");
-        assertThat(result.getDescription()).isEqualTo("Ananas house");
-        assertThat(result.getOwner()).isEqualTo("Spongebob SquarePants");
-        assertThat(result.getFunFact()).isEqualTo("Fun Fact");
-        assertThat(result.getImageUrl()).isEqualTo("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
+        assertThat(result.get().getName()).isEqualTo("Spongebob house");
+        assertThat(result.get().getAdress()).isEqualTo("124 Conch Street");
+        assertThat(result.get().getDescription()).isEqualTo("Ananas house");
+        assertThat(result.get().getOwner()).isEqualTo("Spongebob SquarePants");
+        assertThat(result.get().getFunFact()).isEqualTo("Fun Fact");
+        assertThat(result.get().getImageUrl()).isEqualTo("https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
     }
 
     @Test
     public void givenInvalidLocationName_whenGetLocationByName_thenReturnNull() {
-        when(locationRepository.getLocationByName("FAKE")).thenReturn(null);
+        when(locationRepository.getLocationByName("FAKE")).thenReturn(Optional.empty());
 
         var result = getLocationByNameUseCase.execute("FAKE");
 
-        assertThat(result).isNull();
+        assertThat(result).isEmpty();
     }
 
 }

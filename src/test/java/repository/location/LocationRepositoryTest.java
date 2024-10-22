@@ -39,7 +39,7 @@ class LocationRepositoryTest {
         var location = locationRepository.getLocationByName(name);
 
         assertThat(location).isNotNull();
-        assertThat(location.getName()).isEqualTo(name);
+        assertThat(location.get().getName()).isEqualTo(name);
     }
 
 }

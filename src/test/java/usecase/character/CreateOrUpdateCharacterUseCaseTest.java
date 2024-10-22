@@ -1,19 +1,19 @@
 package usecase.character;
 
-import org.junit.jupiter.api.BeforeEach;
+import domain.character.Character;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import repository.character.CharacterJPAEntity;
 import repository.character.CharacterRepository;
-import domain.character.Character;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class CreateOrUpdateCharacterUseCaseTest {
@@ -35,7 +35,7 @@ public class CreateOrUpdateCharacterUseCaseTest {
         existingCharacter.setMotto("Old Motto");
         existingCharacter.setImageurl("Old ImageUrl");
 
-        when(characterRepository.getCharacterByName(character.getFirstName(), character.getLastName())).thenReturn(existingCharacter);
+        when(characterRepository.getCharacterByName(character.getFirstName(), character.getLastName())).thenReturn(Optional.of(existingCharacter));
 
         createOrUpdateCharacterUseCase.execute(character);
 
@@ -49,7 +49,7 @@ public class CreateOrUpdateCharacterUseCaseTest {
     public void givenNewCharacter_whenExecute_thenCreateCharacter() {
         Character character = new Character("New", "Character", "New Occupation", "New Motto", "newImageUrl");
 
-        when(characterRepository.getCharacterByName(character.getFirstName(), character.getLastName())).thenReturn(null);
+        when(characterRepository.getCharacterByName(character.getFirstName(), character.getLastName())).thenReturn(Optional.empty());
 
         createOrUpdateCharacterUseCase.execute(character);
 

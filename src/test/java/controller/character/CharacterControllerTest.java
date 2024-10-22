@@ -1,5 +1,6 @@
 package controller.character;
 
+import domain.character.Character;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
@@ -7,13 +8,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import usecase.character.*;
-import domain.character.Character;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -69,7 +70,9 @@ class CharacterControllerTest {
         @Test
         public void givenCharacterWithValidId_whenGetCharacterById_thenReturnCharacter() throws IOException {
             when(getCharacterByIdUseCase.execute(anyString()))
-                    .thenReturn(new Character("SpongeBob", "SquarePants", "Fry Cook", "I’m ready!", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png"));
+                    .thenReturn(Optional.of(
+                            new Character("SpongeBob", "SquarePants", "Fry Cook", "I’m ready!", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png")
+                    ));
 
             var response = readResourceFile("spongebob.json");
 

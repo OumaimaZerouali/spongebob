@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -26,7 +27,9 @@ class LocationControllerTest {
         var name = "Spongebob house";
 
         when(getLocationByNameUseCase.execute(name))
-                .thenReturn(new Location(name, "A ananas house", "Spongebob SquarePants", "FUN FACT", "124 Conch street", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png"));
+                .thenReturn(Optional.of(
+                        new Location(name, "A ananas house", "Spongebob SquarePants", "FUN FACT", "124 Conch street", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png")
+                ));
 
         var response = readResourceFile("location.json");
 

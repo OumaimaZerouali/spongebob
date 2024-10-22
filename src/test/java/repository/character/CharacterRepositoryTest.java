@@ -43,40 +43,40 @@ class CharacterRepositoryTest {
 
         when(jpaStreamer.stream(CharacterJPAEntity.class)).thenReturn(Stream.of(character));
 
-        CharacterJPAEntity foundCharacter = characterRepository.getCharacterById(characterId);
+        var foundCharacter = characterRepository.getCharacterById(characterId);
 
         assertThat(foundCharacter).isNotNull();
-        assertThat(foundCharacter.getId()).isEqualTo(characterId);
-        assertThat(foundCharacter.getFirstname()).isEqualTo("SpongeBob");
-        assertThat(foundCharacter.getLastname()).isEqualTo("SquarePants");
+        assertThat(foundCharacter.get().getId()).isEqualTo(characterId);
+        assertThat(foundCharacter.get().getFirstname()).isEqualTo("SpongeBob");
+        assertThat(foundCharacter.get().getLastname()).isEqualTo("SquarePants");
     }
 
     @Test
     void givenFirstNameAndLastName_whenGetCharacterByName_thenReturnCharacter() {
-        String firstName = "SpongeBob";
-        String lastName = "SquarePants";
-        CharacterJPAEntity character = new CharacterJPAEntity();
+        var firstName = "SpongeBob";
+        var lastName = "SquarePants";
+        var character = new CharacterJPAEntity();
         character.setId(UUID.randomUUID().toString());
         character.setFirstname(firstName);
         character.setLastname(lastName);
 
         when(jpaStreamer.stream(CharacterJPAEntity.class)).thenReturn(Stream.of(character));
 
-        CharacterJPAEntity foundCharacter = characterRepository.getCharacterByName(firstName, lastName);
+        var foundCharacter = characterRepository.getCharacterByName(firstName, lastName);
 
         assertThat(foundCharacter).isNotNull();
-        assertThat(foundCharacter.getFirstname()).isEqualTo(firstName);
-        assertThat(foundCharacter.getLastname()).isEqualTo(lastName);
+        assertThat(foundCharacter.get().getFirstname()).isEqualTo(firstName);
+        assertThat(foundCharacter.get().getLastname()).isEqualTo(lastName);
     }
 
     @Test
     void whenGetCharacters_thenReturnListOfCharacters() {
-        CharacterJPAEntity character1 = new CharacterJPAEntity();
+        var character1 = new CharacterJPAEntity();
         character1.setId(UUID.randomUUID().toString());
         character1.setFirstname("SpongeBob");
         character1.setLastname("SquarePants");
 
-        CharacterJPAEntity character2 = new CharacterJPAEntity();
+        var character2 = new CharacterJPAEntity();
         character2.setId(UUID.randomUUID().toString());
         character2.setFirstname("Patrick");
         character2.setLastname("Star");
@@ -91,7 +91,7 @@ class CharacterRepositoryTest {
 
     @Test
     void givenCharacter_whenCreateCharacter_thenPersistCharacter() {
-        Character character = new Character("SpongeBob", "SquarePants", "Fry Cook", "I’m ready!", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
+        var character = new Character("SpongeBob", "SquarePants", "Fry Cook", "I’m ready!", "https://upload.wikimedia.org/wikipedia/en/3/3b/SpongeBob_SquarePants_main_characters.png");
 
         characterRepository.createCharacter(character);
 
@@ -100,7 +100,7 @@ class CharacterRepositoryTest {
 
     @Test
     void givenCharacterEntity_whenUpdateCharacter_thenMergeCharacter() {
-        CharacterJPAEntity characterEntity = new CharacterJPAEntity();
+        var characterEntity = new CharacterJPAEntity();
         characterEntity.setId(UUID.randomUUID().toString());
         characterEntity.setFirstname("SpongeBob");
         characterEntity.setLastname("SquarePants");
@@ -112,8 +112,8 @@ class CharacterRepositoryTest {
 
     @Test
     void givenCharacterId_whenDeleteCharacter_thenRemoveCharacter() {
-        String characterId = UUID.randomUUID().toString();
-        CharacterJPAEntity character = new CharacterJPAEntity();
+        var characterId = UUID.randomUUID().toString();
+        var character = new CharacterJPAEntity();
         character.setId(characterId);
 
         when(entityManager.find(CharacterJPAEntity.class, characterId)).thenReturn(character);
@@ -125,7 +125,7 @@ class CharacterRepositoryTest {
 
     @Test
     void givenNonExistentCharacterId_whenDeleteCharacter_thenDoNotRemoveCharacter() {
-        String characterId = UUID.randomUUID().toString();
+        var characterId = UUID.randomUUID().toString();
 
         when(entityManager.find(CharacterJPAEntity.class, characterId)).thenReturn(null);
 

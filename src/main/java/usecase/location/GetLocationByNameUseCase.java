@@ -5,26 +5,24 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import repository.location.LocationRepository;
 
+import java.util.Optional;
+
 @ApplicationScoped
 public class GetLocationByNameUseCase {
 
     @Inject
     LocationRepository locationRepository;
 
-    public Location execute(String name){
-        var locationEntity = locationRepository.getLocationByName(name);
-
-        if(locationEntity == null){
-            return null;
-        }
-
-        return new Location(
-                locationEntity.getName(),
-                locationEntity.getDescription(),
-                locationEntity.getOwner(),
-                locationEntity.getFunFact(),
-                locationEntity.getAddress(),
-                locationEntity.getImageUrl()
+    public Optional<Location> execute(String name){
+        return locationRepository.getLocationByName(name).map(
+                entity -> new Location(
+                        entity.getName(),
+                        entity.getDescription(),
+                        entity.getOwner(),
+                        entity.getFunFact(),
+                        entity.getAddress(),
+                        entity.getImageUrl()
+                )
         );
     }
 }

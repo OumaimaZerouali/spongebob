@@ -2,10 +2,7 @@ package controller.location;
 
 import domain.location.Location;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import usecase.location.GetLocationByNameUseCase;
 
 import java.net.URLDecoder;
@@ -24,7 +21,8 @@ public class LocationController {
             throw new WebApplicationException("Location name is missing", 400);
         }
 
-        String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
-        return getLocationByNameUseCase.execute(decodedName);
+        var decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+        return getLocationByNameUseCase.execute(decodedName)
+                .orElseThrow(NotFoundException::new);
     }
 }

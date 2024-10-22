@@ -1,10 +1,10 @@
 package controller.character;
 
+import domain.character.Character;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import domain.character.Character;
 import usecase.character.*;
 
 import java.util.List;
@@ -30,7 +30,8 @@ public class CharacterController {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Character getCharacterById(@PathParam("id") String id) {
-        return getCharacterByIdUseCase.execute(id);
+        return getCharacterByIdUseCase.execute(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @GET
