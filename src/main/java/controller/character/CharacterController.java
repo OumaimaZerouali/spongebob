@@ -12,7 +12,6 @@ import java.util.List;
 @Path("/characters")
 public class CharacterController {
 
-
     @Inject
     GetCharacterByIdUseCase getCharacterByIdUseCase;
     @Inject
